@@ -1,0 +1,96 @@
+@CHARSET "ISO-8859-1";
+
+#deactivatePolicy {
+	align: center;
+	width:60%;
+	padding: 32px;
+	padidng-left: 38px;
+	margin-left: 20%;
+	border: 2px solid #1f628d;
+	border-radius: 25px;
+	box-sizing: border-box;
+	
+}
+
+*{
+	font-family: arial;
+}
+
+input[type=text], textarea, input[type=password]{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size:20px;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+    background-color: lightblue;
+}
+
+input[type=radio]{
+    margin: 8px 0;
+}
+
+
+ button{
+	background-color: #1f628d; 
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 15px;
+    width: 32%;
+}
+
+.button:hover {
+    background-color: white;
+    color: #1f628d;
+}
+
+input:placeholder-shown {
+  font-size:20px;
+}
+
+h1.pageTitle{
+	align-text: center;
+}
+
+.popup{
+	top:30%;
+	background: white;
+	position: absolute;
+	display: none;
+	z-index: 2;
+	width: 40%;
+	right: 30%;
+	color: white;
+	border-radius: 10px;
+	padding: 15px 32px;
+	background-color: #1f628d;
+	
+}
+
+#close_popup{
+	float: right;
+	cursor: pointer;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+#confirmDeactivate, #confirm, #confirmUpdate1, #confirmUpdate{
+	position: relative;
+	left:30%;
+	
+}
+
+#errorMsg{
+	
+	text-align:center;
+}

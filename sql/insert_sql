@@ -18,9 +18,12 @@ INSERT INTO premiumType VALUES ('Biweekly');
 INSERT INTO premiumType VALUES ('Annually');
 INSERT INTO premiumType VALUES ('Half-Yearly');
 
-INSERT INTO tenure VALUES ('ONE YEAR');
-INSERT INTO tenure VALUES ('TWO YEARS');
-INSERT INTO tenure VALUES ('THREE YEARS');
+INSERT INTO policyHasTenure VALUES (0, 1);
+INSERT INTO policyHasTenure VALUES (0, 2);
+INSERT INTO policyHasTenure VALUES (0, 3);
+INSERT INTO policyHasTenure VALUES (2, 1);
+INSERT INTO policyHasTenure VALUES (1, 1);
+INSERT INTO policyHasTenure VALUES (1, 3);
 
 INSERT INTO mapping VALUES (0, 0, 0, 0, 'Biweekly', 3, 'Y', 600000, 500, 'Rejected!', SYSDATE);
 INSERT INTO mapping VALUES (1, 2, 1, 2, 'Annually', 2, 'N', 300000, 1000, '', ADD_MONTHS(SYSDATE, -1));

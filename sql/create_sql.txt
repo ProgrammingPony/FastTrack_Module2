@@ -42,6 +42,7 @@ create table policy
 policyName varchar2(30) not null,
 sumAssuredMax int not null,
 sumAssuredMin int not null,
+nomineeMin int default 1 not null,
 isActive char(1) default 'N' CHECK (isActive in ('Y', 'N') ),
 prereq varchar2(255)
 );
@@ -64,10 +65,6 @@ create table premiumType
 (pType varchar(30) primary key
 );
 
-create table tenure
-(tenureLength varchar(20) primary key
-);
-
 create table mapping
 (mappingId int primary key,
 customerId int references customer(customerId),
@@ -84,7 +81,7 @@ acceptanceDate date
 
 create table policyHasTenure
 (policyId int references policy(policyId),
-tenureLength varchar(20) references tenure(tenureLength)
+tenureLength int default 1
 );
 
 create table nominee (

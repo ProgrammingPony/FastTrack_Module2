@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.fasttrack.db.DBHelper;
-
+import java.util.Calendar;
 /**
  * Servlet implementation class MyPolicies
  */
@@ -68,20 +68,31 @@ public class MyPolicies extends HttpServlet {
 	      //Check if it is a customer
 	      stmt = conn.createStatement();
 	      String sql;
-	      sql = "SELECT * FROM mapping WHERE customerId=" + id + " AND username='" + username + "'";	      
-	      
+	      sql = "SELECT policy.policyId as id, policyName, tenureYears, acceptancedate, premium, sumAssured  FROM mapping LEFT JOIN policy ON policy.policyId WHERE customerId=" + id;
+	      System.out.println(sql);
 	      
 	      ResultSet rs = stmt.executeQuery(sql);
 	      ArrayList< TreeMap<String, Object> > list = new ArrayList< TreeMap<String, Object> > ();
-	      
+	      TreeMap<String, Object> map;
 	      //Make list containing all the user's policies
 	      while (rs.next()) {
 	    	  //Map with name,id of each Policy
-	    	  TreeMap<String, Object> map = new TreeMap<String, Object>();
-	    	  map.put("id", value);
-	    	  map.put("name", value);
+	    	  map = new TreeMap<String, Object>();
+	    	  map.put("id", rs.getInt("id"));
+	    	  map.put("name", rs.getString("policyName"));
+	    	  
+	    	  int tenureYears = rs.getInt("tenureYears");
+	    	  
+	    	  map.put("tenure", tenureYears);
+	    	  map.put("premium", rs.getString("premium"));
+	    	  map.put("expiry", 
+	    			  addYearsToDate( rs.getDate("acceptanceDate"), tenureYears ).toString()
+	    			  );
+	    	  
 	    	  list.add(map);
 	      }
+	      
+	      request.setAttribute("my-policy-list", list);
 	      
 	      rs.close();
 	      stmt.close();
@@ -110,5 +121,14 @@ public class MyPolicies extends HttpServlet {
 	    
 	    getServletContext().getRequestDispatcher("/my-policies.jsp").include(request, response);
 	    
+	}
+	
+	public java.sql.Date addYearsToDate(java.sql.Date date, int years) {
+		java.sql.Date logicalDate;
+		Calendar c = Calendar.getInstance(); 
+		c.setTime(date); 
+		c.add(Calendar.YEAR, years);
+		
+		return new java.sql.Date(c.getTimeInMillis());
 	}
 }
