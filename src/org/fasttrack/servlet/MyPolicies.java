@@ -7,6 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import java.util.ArrayList;
+import java.util.TreeMap;
+
 import javax.servlet.http.HttpSession;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -45,7 +48,7 @@ public class MyPolicies extends HttpServlet {
 		
 		//Get parameters
 		String username = (String) session.getAttribute("username");
-		int userId = 
+		int id = (int) session.getAttribute("id");
 		
 		//JDBC
 		Connection conn = null;
@@ -65,15 +68,19 @@ public class MyPolicies extends HttpServlet {
 	      //Check if it is a customer
 	      stmt = conn.createStatement();
 	      String sql;
-	      sql = "SELECT * FROM mapping WHERE customerId='" + username + "' AND password='" + password + "'";	      
+	      sql = "SELECT * FROM mapping WHERE customerId=" + id + " AND username='" + username + "'";	      
 	      
 	      
 	      ResultSet rs = stmt.executeQuery(sql);
+	      ArrayList< TreeMap<String, Object> > list = new ArrayList< TreeMap<String, Object> > ();
 	      
-	      if (rs.next()) {
-	    	  session = request.getSession();
-	    	  session.setAttribute("username", username);
-	    	  session.setAttribute("role", "customer");    	  
+	      //Make list containing all the user's policies
+	      while (rs.next()) {
+	    	  //Map with name,id of each Policy
+	    	  TreeMap<String, Object> map = new TreeMap<String, Object>();
+	    	  map.put("id", value);
+	    	  map.put("name", value);
+	    	  list.add(map);
 	      }
 	      
 	      rs.close();
@@ -100,8 +107,8 @@ public class MyPolicies extends HttpServlet {
 	         se.printStackTrace();
 	      }//end finally try
 	   }//end try
+	    
+	    getServletContext().getRequestDispatcher("/my-policies.jsp").include(request, response);
+	    
 	}
-	
-	getServletContext().getRequestDispatcher("/my-policies.jsp").include(request, response);
-
 }

@@ -1,0 +1,26 @@
+INSERT INTO manager values (0, 'horse', 'cattle', 'rdddder', SYSDATE, 'zdne1', 'state1', 'des1', 'email', 'uesr1', 'pass');
+INSERT INTO manager values (1, 'hdsfe', 'caeeee', 'roosvvr', SYSDATE, 'zofe6', 'state2', 'des3', 'email3', 'uesr1', 'pass2');
+INSERT INTO manager values (2, 'hoffe', 'caaaae', 'rooster', SYSDATE, 'zona7', 'state5', 'des9', 'email2', 'uesr1', 'pass4');
+
+INSERT INTO customer VALUES (0, 'cat', 'dof', 'asdff', SYSDATE, 'Male', 'permanent', 'current', 'horse', 55000.1, 'Single', 1, '32emavdsil@horse.com', '94334', hextoraw('aad332'), '3232424', '123439', 'hadse');
+INSERT INTO customer VALUES (1, 'dst', 'fof', 'aggse', SYSDATE, 'Female', 'permanent', 'current', 'horse', 55000.1, 'Married', 3, '32afdsemail@horse.com', '93455', hextoraw('addd32'), '3678724', '777432', 'hfffe');
+INSERT INTO customer VALUES (2, 'cdfvs', 'bof', 'addse', SYSDATE, 'Other', 'permanent', 'current', 'horse', 55000.1, 'Separated', 10, '32demail@horse.com', '97774', hextoraw('aaad32'), '3888824', '888432', 'hobbe');
+
+INSERT INTO policy VALUES (0,'PolicyOP',1111,2254,1,'Y','Must have a brain');
+INSERT INTO policy VALUES (1,'PolasdfP',1143,2342,1,'Y','Must have a brain');
+INSERT INTO policy VALUES (2,'PofdfyOP',1551,2212,1,'Y','Must have a brain');
+
+INSERT INTO agent VALUES (0, 'horsie', 'mc', 'doggy', SYSDATE, '123 address', 'h@b.c', '9053333333', '2342342344', 2, 'Hamilton', '455544455', 'user1', 'pass2', 2);
+INSERT INTO agent VALUES (1, 'hoie', 'c', 'dy', SYSDATE, '12address', 'hl@b.c', '9053333333', '2342234244', 2, 'Hamilton', '455544666', 'user2', 'pass4', 2);
+INSERT INTO agent VALUES (2, 'rsie', 'm', 'dog', SYSDATE, '3 address', 'hj@b.c', '9053333333', '2342353344', 2, 'Hamilton', '455343455', 'user3', 'pass6', 2);
+
+INSERT INTO premiumType VALUES ('Biweekly');
+INSERT INTO premiumType VALUES ('Annually');
+INSERT INTO premiumType VALUES ('Half-Yearly');
+
+INSERT INTO tenure VALUES ('ONE YEAR');
+INSERT INTO tenure VALUES ('TWO YEARS');
+INSERT INTO tenure VALUES ('THREE YEARS');
+
+INSERT INTO mapping VALUES (0, 0, 0, 0, 'Biweekly', 3, 'Y', 600000, 500, 'Rejected!', SYSDATE);
+INSERT INTO mapping VALUES (1, 2, 1, 2, 'Annually', 2, 'N', 300000, 1000, '', ADD_MONTHS(SYSDATE, -1));

@@ -3,17 +3,19 @@ create table customer
 firstname varchar2(20) not null,
 middlename varchar2(20),
 lastname varchar2(20) not null,
-gender varchar2(10) check (gender in ('Male', 'Female', 'Other')),
-maritalStatus varchar2(15) check (maritalStatus in ('Single', 'Separated','Divorced', 'Widowed', 'Married', 'Common Law')),
 dob date,
-address varchar2(255) not null,
+gender varchar2(10) check (gender in ('Male', 'Female', 'Other')),
+permanentAddress varchar2(255) not null,
+currentAddress varchar2(255) not null,
+occupation varchar2(40),
+salary float not null,
+maritalStatus varchar2(15) check (maritalStatus in ('Single', 'Separated','Divorced', 'Widowed', 'Married', 'Common Law')),
+children int,
 email varchar2(255),
+sinNumber varchar2(9),
+photoId blob,
 homephone varchar2(20),
 mobilephone varchar2(20),
-sinNumber varchar2(9),
-occupation varchar2(40),
-photoId blob,
-username varchar2(30),
 password varchar2(30)
 );
 
@@ -22,7 +24,7 @@ create table agent
 firstname varchar2(20) not null,
 middlename varchar2(20),
 lastname varchar2(20) not null,
-dob date,
+dob varchar2(20),
 address varchar2(255) not null,
 email varchar2(255),
 homephone varchar2(20),
@@ -31,14 +33,17 @@ yearsOfExp int not null,
 location varchar2(30) not null,
 sinNumber varchar2(9),
 username varchar2(30),
-password varchar2(30)
+password varchar2(30),
+active NUMBER(1)
 );
 
 create table policy
 (policyId int primary key,
 policyName varchar2(30) not null,
 sumAssuredMax int not null,
-sumAssuredMin int not null
+sumAssuredMin int not null,
+isActive char(1) default 'N' CHECK (isActive in ('Y', 'N') ),
+prereq varchar2(255)
 );
 
 create table manager
@@ -64,14 +69,17 @@ create table tenure
 );
 
 create table mapping
-(customerId int references customer(customerId),
+(mappingId int primary key,
+customerId int references customer(customerId),
 policyId int references policy(policyId),
 agentId int references agent(agentId),
 premiumType varchar(30) references premiumType(pType),
-tenureLength varchar(20) references tenure(tenureLength),
+tenureYears int,
+isApproved char(1) CHECK (isApproved in ('Y', 'N') ),
 sumAssured int not null,
 premium int not null,
-primary key(customerId, agentId, policyId, premiumType, tenureLength)
+rejectionComments varchar(100),
+acceptanceDate date
 );
 
 create table policyHasTenure
