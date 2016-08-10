@@ -46,8 +46,11 @@ public class MyPolicies extends HttpServlet {
 			getServletContext().getRequestDispatcher("/login.jsp").include(request, response);
 		}
 		
+		System.out.println(session.getAttribute("username"));
+		System.out.println(session.getAttribute("id"));
+		System.out.println(session.getAttribute("role"));
+		
 		//Get parameters
-		String username = (String) session.getAttribute("username");
 		int id = (int) session.getAttribute("id");
 		
 		//JDBC

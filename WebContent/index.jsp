@@ -50,9 +50,9 @@
 				
 				<div class="col-md-2" style="background:#ccccff; border-radius:5px;" >
 					<!-- Logged in user data -->
-					<% if (session != null && session.getAttribute("username") != null) { %>
+					<% if (session != null && session.getAttribute("id") != null) { %>
 						<h2 class="ft-left-menu-header">Hello</h2>
-						<p><b>Username:</b> <%= (String)session.getAttribute("username") %></p>
+						<p><b>ID:</b> <%= (Integer)session.getAttribute("id") %></p>
 						<p><b>Role:</b> <%= (String)session.getAttribute("role") %></p>
 					<% } %>
 					
@@ -60,10 +60,11 @@
 					<h2 class="ft-left-menu-header">Menu</h2>
 				
 					<ul class="nav nav-pills" style="border-radius:5px;">
-						<% if (session.getAttribute("username") == null) { %>
+						<% if (session.getAttribute("id") == null) { %>
 							<li><a class="ft-left-link" href="login.jsp">Login</a></li>
 						<% } else { %>
 							<li><a class="ft-left-link" href="Logout">Logout</a></li>
+							<li><a class="ft-left-link" href="MyPolicies">My Policies</a></li>
 						<% } %>
 					</ul>					
 				</div>

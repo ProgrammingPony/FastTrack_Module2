@@ -41,7 +41,7 @@ public class Login extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		
-		String username = request.getParameter("username");
+		int id = Integer.parseInt(request.getParameter("username"));
 		String password = request.getParameter("password");
 		
 		boolean isAuthentic = false;
@@ -70,7 +70,7 @@ public class Login extends HttpServlet {
 	      //Check if it is a customer
 	      stmt = conn.createStatement();
 	      String sql;
-	      sql = "SELECT * FROM customer WHERE username='" + username + "' AND password='" + password + "'";	      
+	      sql = "SELECT * FROM customer WHERE customerId=" + id + " AND password='" + password + "'";	      
 	      
 	      
 	      ResultSet rs = stmt.executeQuery(sql);
@@ -78,7 +78,6 @@ public class Login extends HttpServlet {
 	      if (rs.next()) {
 	    	  isAuthentic = true;
 	    	  session = request.getSession();
-	    	  session.setAttribute("username", username);
 	    	  session.setAttribute("id", rs.getInt("customerId"));
 	    	  session.setAttribute("role", "customer");    	  
 	      }
@@ -90,13 +89,12 @@ public class Login extends HttpServlet {
 	      if (!isAuthentic) {
 	    	  stmt = conn.createStatement();
 	    	  
-	    	  sql = "SELECT * FROM manager WHERE username='" + username + "' AND password='" + password + "'";
+	    	  sql = "SELECT * FROM manager WHERE managerId=" + id + " AND password='" + password + "'";
 	    	  
 	    	  rs = stmt.executeQuery(sql);
 		      
 		      if (rs.next()) {
 		    	  isAuthentic = true;
-		    	  session.setAttribute("username", username);
 		    	  
 		    	  if (rs.getInt("adminstatus") != 1)
 		    		  session.setAttribute("role", "manager");
@@ -138,7 +136,7 @@ public class Login extends HttpServlet {
 	   if (isAuthentic) {
 		   getServletContext().getRequestDispatcher("/index.jsp").include(request, response);
 	   } else {
-		   request.setAttribute("username", username);
+		   request.setAttribute("username", id);
 		   request.setAttribute("login-error", "No username or password was found to match this user");
 		   getServletContext().getRequestDispatcher("/login.jsp").include(request, response);
 	   }

@@ -6,6 +6,8 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>My Policies</title>
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	</head>
 	
 	<body>
@@ -20,19 +22,17 @@
 					<% } %>				
 				<% } %>
 			</select>
-			
-			<input type="text" name="selected-policy-name" style="visibility:hidden; display:none;"/>
-			
-			<input type="submit" name="View Policy Details"/>
+						
+			<button id="view-details-button">View Policy Details</button>
 		</form>
 		
 		<div id="policy-details">
-			Policy Id:
-			Policy Name:
-			Tenure:
-			Sum Assured:
-			Premium: 
-			Expiry:
+			Policy Id: <span id="detail-id"></span>
+			Policy Name: <span id="detail-name"></span>
+			Tenure: <span id="detail-tenure"></span>
+			Sum Assured: <span id="detail-sum-assured"></span>
+			Premium: <span id="detail-premium"></span>
+			Expiry: <span id="detail-expiry"></span>
 		</div>
 	</body>
 </html>

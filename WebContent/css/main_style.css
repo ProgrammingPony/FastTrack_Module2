@@ -1,0 +1,153 @@
+/* TEMPLATE DO NOT MODIFY 
+
+GREY: #ECF0F1
+LIGHTGREEN: #1ABC9C
+DARKERGREEN: #16A085
+RED: #E74C3C
+DARKBLUE: #2C3E50
+*/
+
+body{
+	margin: 0;
+}
+
+#banner{
+	height: 400px;
+	background-image: url('../img/banner.jpg');
+  -webkit-mask-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,1));
+	mask-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,1));
+	background-attachment: fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+#body{
+	position: absolute;
+	height: calc(100% - 200px);
+	width: 100%;
+	height: 100%;
+}
+
+#topBar{
+	position: absolute;
+	top: 352px;
+	width: 100%;
+	box-shadow: 0px 4px 10px 1px rgba(0,0,0,0.25);
+	z-index: 100;
+}
+
+#topBar ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: #2C3E50;
+}
+
+/* Nav bar template */
+#topBar li {
+	float: left;
+}
+
+#topBar li a {
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+}
+
+#topBar li a:hover {
+	background-color: #E74C3C;
+}
+
+.topBar-fixed {
+	top: 0 !important;
+	position: fixed !important;
+	padding-top: 0 !important;
+}
+
+.sidebar-fixed {
+	top: 48px !important;
+	position: fixed !important;
+}
+
+/* Sidebar template*/
+#sidebar-wrapper {
+	z-index: 1000;
+	overflow-y: auto;
+	background: #000;
+	-webkit-transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease;
+	-o-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+	height: 100%;
+	width: 200px;
+	background-color: #16A085;
+	float: left;
+}
+
+.sidebar-nav {
+	position: absolute;
+	top: 0;
+	width: 200px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.sidebar-nav li {
+	text-indent: 20px;
+	line-height: 40px;
+}
+
+.sidebar-nav li a {
+	display: block;
+	text-decoration: none;
+	color: white;
+}
+
+.sidebar-nav li a:hover {
+	text-decoration: none;
+	color: #fff;
+	background: #1ABC9C;
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+	text-decoration: none;
+}
+
+.sidebar-nav > .sidebar-brand {
+	font-size: 18px;
+	line-height: 60px;
+	margin: 0;
+	background-color: rgba(0,0,0,0.2);
+}
+
+#logo{
+	height: 60px;
+	width: auto;
+	padding: 15px;
+	position: absolute;
+	left: -4px;
+}
+
+.sidebar-nav > .sidebar-brand p {
+	color: #fff;
+	background: none;
+	text-align: center;
+	font-family: serif;
+	font-size: 1.2em;
+	margin: 0;
+	color: #ECF0F1;
+}
+
+/* Custom main css goes here */
+#main{
+	height: 900px;
+	background-color: white;
+	width: calc(100% - 200px);
+	float: right;
+}

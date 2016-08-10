@@ -114,7 +114,7 @@ public class RegisterServlet extends HttpServlet {
 			
 			
 			try {
-				getServletContext().getRequestDispatcher("/index.jsp").include(request, response);
+				getServletContext().getRequestDispatcher("/policy-register.jsp").include(request, response);
 				return;
 			} 
 			catch (IOException e) {

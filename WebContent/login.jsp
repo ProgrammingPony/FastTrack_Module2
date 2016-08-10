@@ -9,7 +9,7 @@
 	</head>
 	<body>
 		
-		<% String username = request.getAttribute("username") == null ? "" : (String) request.getAttribute("username");  %>
+		<% String username = request.getAttribute("id") == null ? "" : (String) request.getAttribute("id");  %>
 	
 		<form method="post" action="Login">
 			<label for="username">Username</label>
@@ -21,7 +21,7 @@
 			<input type="password" name="password" value=""/>
 			
 			<% if ( request.getAttribute("login-error") != null  ) { %>
-				<div><%= (String) request.getAttribute("login-error") %></div>			
+				<div style="color:red"><%= (String) request.getAttribute("login-error") %></div>			
 			<% } %>
 			
 			<input type="submit" value="Login"/>
