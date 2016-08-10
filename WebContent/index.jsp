@@ -1,80 +1,52 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%
+response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+response.setDateHeader("Expires", 0); // Proxies.
+%>
+
+<!DOCTYPE html>
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>Insert title here</title>
-		
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		
-		<style>
-		.ft-left-menu-header {
-			
-		}
-		
-		.ft-left-link:link {
-			font-weight:600;
-		}
-		.ft-left-link:link {
-			color:purple;
-		}
-		.ft-left-link:hover {
-			color:purple;
-		}
-		.ft-left-link:visited {
-			color:purple;
-		}
-		
-		</style>
+		<title>Policy Registration - Admin</title>
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="css/login_registration_style.css">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
 	</head>
-	
+
 	<body>
-		<div class="container-fluid" style="margin-top:2%;">
-			<!-- Top Menu -->
-			<div class="row">
-				<div class="col-md-12" >
-					<div class="jumbotron" style="margin-top:2%">
-						<p>Fast Track</p>
-					</div>					
-				</div>
-			</div>
-		</div>
-	
-		<div class="container" style="margin-top:6px;">
-			<div class="row">
-			
-				
-				<div class="col-md-2" style="background:#ccccff; border-radius:5px;" >
-					<!-- Logged in user data -->
-					<% if (session != null && session.getAttribute("id") != null) { %>
-						<h2 class="ft-left-menu-header">Hello</h2>
-						<p><b>ID:</b> <%= (Integer)session.getAttribute("id") %></p>
-						<p><b>Role:</b> <%= (String)session.getAttribute("role") %></p>
+		<div class="login-page">
+			<div class="form">
+				<form class="login-form" action = "RegisterServlet" method = "get">
+					<h1>Policy Registration</h1>
+					<% String name = (String) request.getAttribute("error"); %>
+					<% if ( name != null && !name.isEmpty() ) { %>
+					<h3 id="j-error-message" class="error-message">Invalid Input <br><%= request.getAttribute("error")%></h3>
 					<% } %>
-					
-					<!-- Vertical Menu on left -->
-					<h2 class="ft-left-menu-header">Menu</h2>
 				
-					<ul class="nav nav-pills" style="border-radius:5px;">
-						<% if (session.getAttribute("id") == null) { %>
-							<li><a class="ft-left-link" href="login.jsp">Login</a></li>
-						<% } else { %>
-							<li><a class="ft-left-link" href="Logout">Logout</a></li>
-							<li><a class="ft-left-link" href="MyPolicies">My Policies</a></li>
-						<% } %>
-					</ul>					
-				</div>
-				
-				<!-- Content Body -->
-				<div class="col-md-10">
-				
-				</div>
-				<!-- End Content Body -->
+					<input type = "text" name = "name" placeholder="Policy Name" value="<%= request.getAttribute("name") == null ? "" : (String) request.getAttribute("name") %>"></input><br>
+					<input type = "text" name = "numNominee" placeholder= "Minimum Number of Nominee" value = "<%= request.getAttribute("numNominee") == null ? "" : (String) request.getAttribute("numNominee") %>" ></input><br>
+					<label>Pre-Requisites</label><br>
+					<textarea rows="10" cols="25" name = "prereq" value = "<%= request.getAttribute("prereq") == null ? "" : (String) request.getAttribute("prereq") %>"></textarea>
+					<p><b>Tenure</b></p>
+					<input type="checkbox" name="tenure1" value="1year">1 year<br>
+					<input type="checkbox" name="tenure2" value="2year">2 year<br>
+					<input type="checkbox" name="tenure3" value="3year">3 year<br>
+					<input type="checkbox" name="tenure4" value="4year">4 year<br>
+					<input type="checkbox" name="tenure5" value="5year">5 year<br>
+					<input type="checkbox" name="tenure6" value="6year" checked>6 year<br>
+					<input type = "text" name = "minSum" placeholder= "Minimum Sum Assured" value = "<%= request.getAttribute("minSum") == null ? "" : (String) request.getAttribute("minSum") %>"></input><br>
+					<input type = "text" name = "maxSum" placeholder = "Maximum Sum Assured" value = "<%= request.getAttribute("maxSum") == null ? "" : (String) request.getAttribute("maxSum") %>"></input><br>
+					<input type = "submit" value = "Submit"></input>
+				</form>
 			</div>
 		</div>
 	</body>
+
 </html>
+
+
+

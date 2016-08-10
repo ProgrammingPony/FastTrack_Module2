@@ -37,6 +37,17 @@ DARKBLUE: #2C3E50
 	box-sizing: border-box;
 	font-size: 14px;
 }
+input[type=submit] {
+	font-family: "Roboto", sans-serif;
+	outline: 0;
+	background:#7FFFD4;
+	width: 100%;
+	border: 0;
+	margin: 0 0 15px;
+	padding: 15px;
+	box-sizing: border-box;
+	font-size: 14px;
+}
 
 .form .date{
 	font-family: "Roboto", sans-serif;
@@ -64,6 +75,13 @@ DARKBLUE: #2C3E50
 	top: 10px;
 	margin: 0;
 	color: gray;
+}
+
+.form .error-message{
+	margin-top: 0;
+	color: #E74C3C;
+	font-size: 1.4em;
+	font-weight: bold;
 }
 
 .form label{

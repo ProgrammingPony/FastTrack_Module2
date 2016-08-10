@@ -58,7 +58,8 @@ selectState varchar2(20) not null,
 selectDesignation varchar2(20) not null,
 email varchar2(30) not null,
 username varchar2(30),
-password varchar2(30)
+password varchar2(30),
+adminStatus int default 0 CHECK(adminstatus IN (0,1))
 );
 
 create table premiumType

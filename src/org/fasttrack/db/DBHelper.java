@@ -1,5 +1,8 @@
 package org.fasttrack.db;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 /**
  * @author 1319288
  * Set these yourself
@@ -21,6 +24,22 @@ public class DBHelper {
 	}
 	public static String getPass() {
 		return PASS;
+	}
+	
+	public static Connection getDatabaseConnection () { 
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection(
+					getDbUrl(),
+					getUser(),
+					getPass()
+					);
+		} catch (SQLException e) {
+			System.out.println("DBHelper failed to create database connection");
+			e.printStackTrace();
+		}
+		
+		return conn;
 	}
 	
 	

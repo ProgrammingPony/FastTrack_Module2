@@ -134,11 +134,12 @@ public class Login extends HttpServlet {
 		
 		//Redirect
 	   if (isAuthentic) {
-		   getServletContext().getRequestDispatcher("/index.jsp").include(request, response);
+		   getServletContext().getRequestDispatcher("/main.jsp").include(request, response);
 	   } else {
 		   request.setAttribute("username", id);
 		   request.setAttribute("login-error", "No username or password was found to match this user");
-		   getServletContext().getRequestDispatcher("/login.jsp").include(request, response);
+		   response.sendRedirect("/login.jsp");
+		   //getServletContext().getRequestDispatcher("/login.jsp").include(request, response);
 	   }
 		
 	}
