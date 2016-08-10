@@ -14,18 +14,18 @@
 			list = (ArrayList< TreeMap<String,Object> >) request.getAttribute("my-policy-list");
 		} %>
 		<script>
-			policyDetails = [
+			policyDetails = [];
 				<% for ( TreeMap<String,Object> map : list ) { %>
-					{
+				policyDetails[<%= (Integer) map.get("id") %>] = {
 						id: <%= (Integer) map.get("id") %>,
 						name: '<%= (String) map.get("name") %>',
 						tenure: <%= (Integer) map.get("tenure") %>,
 						premium: <%= (Integer) map.get("premium") %>,
 						sumAssured: <%= (Integer) map.get("sumAssured") %>,
 						expiry: '<%= (String) map.get("expiry") %>'
-					}
-				<% } %>         
-			];	
+					};
+				<% } %>
+
 		</script>
 	</head>
 	
