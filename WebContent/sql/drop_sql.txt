@@ -1,0 +1,13 @@
+drop table medical_details;
+drop table policy_has_prerequisites;
+drop table prereq;
+drop table claim;
+drop table nominee;
+drop table policyHasTenure;
+drop table mapping;
+drop table tenure;
+drop table premiumType;
+drop table manager;
+drop table policy;
+drop table agent;
+drop table customer;

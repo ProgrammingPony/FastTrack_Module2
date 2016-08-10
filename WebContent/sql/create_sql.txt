@@ -1,0 +1,125 @@
+create table customer
+(customerId int primary key,
+firstname varchar2(20) not null,
+middlename varchar2(20),
+lastname varchar2(20) not null,
+gender varchar2(10) check (gender in ('Male', 'Female', 'Other')),
+maritalStatus varchar2(15) check (maritalStatus in ('Single', 'Separated','Divorced', 'Widowed', 'Married', 'Common Law')),
+dob date,
+address varchar2(255) not null,
+email varchar2(255),
+homephone varchar2(20),
+mobilephone varchar2(20),
+sinNumber varchar2(9),
+occupation varchar2(40),
+photoId blob,
+username varchar2(30),
+password varchar2(30)
+);
+
+create table agent
+(agentId int primary key,
+firstname varchar2(20) not null,
+middlename varchar2(20),
+lastname varchar2(20) not null,
+dob date,
+address varchar2(255) not null,
+email varchar2(255),
+homephone varchar2(20),
+mobilephone varchar2(20),
+yearsOfExp int not null,
+location varchar2(30) not null,
+sinNumber varchar2(9),
+username varchar2(30),
+password varchar2(30)
+);
+
+create table policy
+(policyId int primary key,
+policyName varchar2(30) not null,
+sumAssuredMax int not null,
+sumAssuredMin int not null
+);
+
+create table manager
+(managerId int primary key, --Check highest id within code to generate email addresses
+firstname varchar2(20) not null,
+middlename varchar2(20),
+lastname varchar2(20) not null,
+dob date,
+selectZone varchar2(20) not null,
+selectState varchar2(20) not null,
+selectDesignation varchar2(20) not null,
+email varchar2(30) not null,
+username varchar2(30),
+password varchar2(30)
+);
+
+create table premiumType
+(pType varchar(30) primary key
+);
+
+create table tenure
+(tenureLength varchar(20) primary key
+);
+
+create table mapping
+(customerId int references customer(customerId),
+policyId int references policy(policyId),
+agentId int references agent(agentId),
+premiumType varchar(30) references premiumType(pType),
+tenureLength varchar(20) references tenure(tenureLength),
+sumAssured int not null,
+premium int not null,
+primary key(customerId, agentId, policyId, premiumType, tenureLength)
+);
+
+create table policyHasTenure
+(policyId int references policy(policyId),
+tenureLength varchar(20) references tenure(tenureLength)
+);
+
+create table nominee (
+nomineeId int primary key,
+customerId int references customer(customerId),
+policyId int references policy(policyId),
+name varchar2(30),
+relationship varchar2(30),
+dob date not null,
+id_proof blob not null
+);
+
+create table claim
+(claimId int primary key,
+agentId int references agent(agentId),
+policyId int references policy(policyId),
+customerId int references customer(customerId),
+nomineeId int references nominee(nomineeId),
+managerId int references manager(managerId),
+reason_for_rejection varchar2(255),
+claim_type varchar2(20) CHECK ( claim_type IN ('intermittent_claim', 'death', 'policy_matured_or_expired') ),
+status varchar2(10) CHECK (status IN ('approved', 'pending', 'rejected')),
+document blob,
+reason_for_claim varchar2(255),
+payout_date date,
+payout int,
+approval_date date
+
+);
+
+create table prereq(
+prereq varchar2(100) primary key
+);
+
+create table policy_has_prerequisites (
+prereq varchar2(100) references prereq(prereq),
+policyId int references policy(policyId)
+);
+
+create table medical_details(
+customerId int references customer(customerId),
+answer1 varchar2(255),
+answer2 varchar2(255),
+answer3 varchar2(255),
+answer4 varchar2(255)
+);
