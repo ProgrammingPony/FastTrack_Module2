@@ -16,12 +16,18 @@ public class DBHelper {
 	public static String getJdbcDriver() {
 		return JDBC_DRIVER;
 	}
+	
+	@Deprecated
 	public static String getDbUrl() {
 		return DB_URL;
 	}
+	
+	@Deprecated
 	public static String getUser() {
 		return USER;
 	}
+	
+	@Deprecated
 	public static String getPass() {
 		return PASS;
 	}

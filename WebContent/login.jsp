@@ -1,10 +1,13 @@
+<%@ page import="org.fasttrack.db.module2.DBMethods" %>
 
-    <% if ( (session != null) && (session.getAttribute("username") != null) ) response.sendRedirect("index1.jsp"); %>
-    
     <%
-    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-    response.setHeader("Pragma", "no-cache");
-    response.setDateHeader("Expires", 0);
+    
+    if ( (session != null) && (session.getAttribute("id") != null) )
+		response.sendRedirect("main.jsp");
+    
+    if ("POST".equalsIgnoreCase(request.getMethod()) && request.getParameter("submit") != null) {
+    	DBMethods.login(request, Integer.parseInt(request.getParameter("username")), request.getParameter("password"));
+    }
     %>
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -27,7 +30,7 @@
 		
 			<% String username = request.getAttribute("id") == null ? "" : (String) request.getAttribute("id");  %>
 		
-			<form class = "login-form" method="post" action="Login">
+			<form class = "login-form" method="post" action="login.jsp">
 				<h1>Login</h1>
 	
 				<input type="text" name="username" value="<%= username %>" placeholder = "Username"/>
@@ -39,7 +42,7 @@
 					<div style="color:red"><%= (String) request.getAttribute("login-error") %></div>			
 				<% } %>
 				
-				<input type="submit" value="Login"/>
+				<input type="submit" name="submit" value="Login"/>
 			</form>
 			</div>
 		</div>
