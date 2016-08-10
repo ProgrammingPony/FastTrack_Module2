@@ -8,31 +8,71 @@
 		<title>My Policies</title>
 		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+		
+		<%! ArrayList < TreeMap<String,Object> > list; %>
+		<% if ( (request.getAttribute("my-policy-list") != null)  ) {
+			list = (ArrayList< TreeMap<String,Object> >) request.getAttribute("my-policy-list");
+		} %>
+		<script>
+			policyDetails = [
+				<% for ( TreeMap<String,Object> map : list ) { %>
+					{
+						id: <%= (Integer) map.get("id") %>,
+						name: '<%= (String) map.get("name") %>',
+						tenure: <%= (Integer) map.get("tenure") %>,
+						premium: <%= (Integer) map.get("premium") %>,
+						sumAssured: <%= (Integer) map.get("sumAssured") %>,
+						expiry: '<%= (String) map.get("expiry") %>'
+					}
+				<% } %>         
+			];	
+		</script>
 	</head>
 	
-	<body>
-		<form>
+	<body>			
+		<select id="policy-name-list">
 			
-			<select id="policy-name-list">
-				<%! ArrayList < TreeMap<String,Object> > list; %>
-				
-				<% if (( list = (ArrayList< TreeMap<String,Object> >) request.getAttribute("my-policy-list") ) != null) { %>
-					<% for ( TreeMap<String,Object> map : list) { %>
-					<option id="<%= map.get("id") %>" value="<%= map.get("id") %>"><%= map.get("name") %></option>
-					<% } %>				
-				<% } %>
-			</select>
+			
+			<% if (( list = (ArrayList< TreeMap<String,Object> >) request.getAttribute("my-policy-list") ) != null) { %>
+				<% for ( TreeMap<String,Object> map : list) { %>
+				<option id="<%= map.get("id") %>" value="<%= map.get("id") %>"><%= map.get("name") %></option>
+				<% } %>				
+			<% } %>
+		</select>
+			
+			
 						
-			<button id="view-details-button">View Policy Details</button>
-		</form>
+		<button id="view-details-button">View Policy Details</button>
 		
-		<div id="policy-details">
-			Policy Id: <span id="detail-id"></span>
-			Policy Name: <span id="detail-name"></span>
-			Tenure: <span id="detail-tenure"></span>
-			Sum Assured: <span id="detail-sum-assured"></span>
-			Premium: <span id="detail-premium"></span>
-			Expiry: <span id="detail-expiry"></span>
+		<div id="policy-details" style="display:none;">
+			<b>Policy Id:</b> <span id="detail-id"></span>
+			<br>
+			<b>Policy Name:</b> <span id="detail-name"></span>
+			<br>
+			<b>Tenure:</b> <span id="detail-tenure"></span>
+			<br>
+			<b>Sum Assured:</b> <span id="detail-sum-assured"></span>
+			<br>
+			<b>Premium:</b> <span id="detail-premium"></span>
+			<br>
+			<b>Expiry:</b> <span id="detail-expiry"></span>
+			<br>
 		</div>
+		
+		<script>
+			$('#view-details-button').click(function(){
+				
+				var option = $('#policy-name-list').find(":selected").attr('id');
+				
+				$('#detail-id').html( policyDetails[option].id );
+				$('#detail-name').html( policyDetails[option].name );
+				$('#detail-tenure').html( policyDetails[option].tenure );
+				$('#detail-sum-assured').html( policyDetails[option].sumAssured );
+				$('#detail-expiry').html( policyDetails[option].expiry );
+				$('#detail-premium').html( policyDetails[option].premium );
+				
+				$('#policy-details').css('display', 'block');
+			});
+		</script>
 	</body>
 </html>

@@ -6,7 +6,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import java.util.ArrayList;
 import java.util.TreeMap;
 
@@ -18,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.fasttrack.db.DBHelper;
+import org.fasttrack.processing.DateHelper;
+
 import java.util.Calendar;
 /**
  * Servlet implementation class MyPolicies
@@ -41,14 +42,10 @@ public class MyPolicies extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		
 		//Redirect if no session or username not set, or role is not customer
-		if (session == null || session.getAttribute("username") == null || !((String)session.getAttribute("role")).equals("customer") ) {
+		if (session == null || session.getAttribute("id") == null || !((String)session.getAttribute("role")).equals("customer") ) {
 			request.setAttribute("login-error", "This page requires the user to log in");
 			getServletContext().getRequestDispatcher("/login.jsp").include(request, response);
 		}
-		
-		System.out.println(session.getAttribute("username"));
-		System.out.println(session.getAttribute("id"));
-		System.out.println(session.getAttribute("role"));
 		
 		//Get parameters
 		int id = (int) session.getAttribute("id");
@@ -71,8 +68,7 @@ public class MyPolicies extends HttpServlet {
 	      //Check if it is a customer
 	      stmt = conn.createStatement();
 	      String sql;
-	      sql = "SELECT policy.policyId as id, policyName, tenureYears, acceptancedate, premium, sumAssured  FROM mapping LEFT JOIN policy ON policy.policyId WHERE customerId=" + id;
-	      System.out.println(sql);
+	      sql = "SELECT policy.policyId as id, policyName, tenureYears, acceptancedate, premium, sumAssured  FROM mapping LEFT JOIN policy ON policy.policyId = mapping.policyId WHERE customerId=" + id;
 	      
 	      ResultSet rs = stmt.executeQuery(sql);
 	      ArrayList< TreeMap<String, Object> > list = new ArrayList< TreeMap<String, Object> > ();
@@ -83,13 +79,14 @@ public class MyPolicies extends HttpServlet {
 	    	  map = new TreeMap<String, Object>();
 	    	  map.put("id", rs.getInt("id"));
 	    	  map.put("name", rs.getString("policyName"));
+	    	  map.put("sumAssured", rs.getInt("sumAssured"));
 	    	  
 	    	  int tenureYears = rs.getInt("tenureYears");
 	    	  
 	    	  map.put("tenure", tenureYears);
-	    	  map.put("premium", rs.getString("premium"));
+	    	  map.put("premium", rs.getInt("premium"));
 	    	  map.put("expiry", 
-	    			  addYearsToDate( rs.getDate("acceptanceDate"), tenureYears ).toString()
+	    			  DateHelper.addYearsToDate( rs.getDate("acceptanceDate"), tenureYears ).toString()
 	    			  );
 	    	  
 	    	  list.add(map);
@@ -124,14 +121,5 @@ public class MyPolicies extends HttpServlet {
 	    
 	    getServletContext().getRequestDispatcher("/my-policies.jsp").include(request, response);
 	    
-	}
-	
-	public java.sql.Date addYearsToDate(java.sql.Date date, int years) {
-		java.sql.Date logicalDate;
-		Calendar c = Calendar.getInstance(); 
-		c.setTime(date); 
-		c.add(Calendar.YEAR, years);
-		
-		return new java.sql.Date(c.getTimeInMillis());
 	}
 }
