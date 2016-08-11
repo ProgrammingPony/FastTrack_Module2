@@ -2,7 +2,6 @@ package org.fasttrack.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -28,10 +27,10 @@ public class updateNomineeServlet extends HttpServlet {
 		String nomineeName = request.getParameter("newNomineeName"); 
 		String relation = request.getParameter("newRelationToNominee");
 		String dob =request.getParameter("newdob");
-		String purpose = request.getParameter("newNomineePurpose"); 
 		
 		if(updateNomineeJDBC.update(nomineeId, nomineeName, relation, dob)){
-			RequestDispatcher rs = request.getRequestDispatcher("updateNomineeSuccess.jsp");
+
+			RequestDispatcher rs = request.getRequestDispatcher("updateNominee.jsp");
 			rs.forward(request, response);
 		}
 		else{

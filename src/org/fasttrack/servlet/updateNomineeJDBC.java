@@ -13,7 +13,7 @@ public class updateNomineeJDBC {
 
 	   //  Database credentials
 	   static final String USER = "system";
-	   static final String PASS = "tcs12345";
+	   static final String PASS = "system";
 	   
 	   
 	   public static boolean update(int id,String name, String relation,String dob){

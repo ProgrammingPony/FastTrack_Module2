@@ -1,6 +1,7 @@
 package org.fasttrack.db.module2;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -9,6 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,6 +19,7 @@ import org.fasttrack.db.*;
 import org.fasttrack.db.sequences.PolicySequence;
 import org.fasttrack.jdbc.JDBCDemo;
 import org.fasttrack.processing.DateHelper;
+import org.fasttrack.servlet.updateNomineeJDBC;
 
 
 
@@ -319,6 +322,29 @@ public class DBMethods {
 	         se.printStackTrace();
 	      }//end finally try
 	   }//end try
+	}
+	
+	public static boolean updateNominee (HttpServletRequest request) {
+		boolean isSuccessful = false;
+	
+		int nomineeId = Integer.parseInt(request.getParameter("nomineeID"));
+		String nomineeName = request.getParameter("newNomineeName"); 
+		String relation = request.getParameter("newRelationToNominee");
+		String dob =request.getParameter("newdob");
+		String purpose = request.getParameter("newNomineePurpose"); 
+		
+		if(updateNomineeJDBC.update(nomineeId, nomineeName, relation, dob)){
+			isSuccessful = true;
+			
+		}
+		else{
+		//	RequestDispatcher rs2 = request.getRequestDispatcher("failure.jsp");
+			//rs2.forward(request, response);
+			
+		
+		}
+		
+		return isSuccessful;
 	}
 	
 }

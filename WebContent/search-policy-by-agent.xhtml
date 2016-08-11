@@ -23,22 +23,41 @@
 					<h:panelGrid>
 						<h:panelGroup>
 							<h:outputLabel for="agentId">Agent ID</h:outputLabel>
-			    			<h:inputText value=""></h:inputText>
-		    			</h:panelGroup>
-		    			
-		    			<h:panelGroup>
-							<h:selectOneMenu value="">
-							   	<f:selectItem itemValue="Cream Latte" itemLabel="Coffee3 - Cream Latte" />
-							   	<f:selectItem itemValue="Extreme Mocha" itemLabel="Coffee3 - Extreme Mocha" />
-							   	<f:selectItem itemValue="Buena Vista" itemLabel="Coffee3 - Buena Vista" />
+			    			<h:selectOneMenu id="agentId" name="agentId" value="#{viewCustomersMarkedToAgent.agentId}">
+								<f:selectItems value="#{viewCustomersMarkedToAgent.agentIds}"></f:selectItems>
 							</h:selectOneMenu>
+							<h:commandButton action="#{viewCustomersMarkedToAgent.updateCustomerList()}" value="List Customers"></h:commandButton>
 		    			</h:panelGroup>
 		    			
-		    			<h:panelGroup>
-							<h:commandButton action="viewdetails" value="Submit"></h:commandButton>
+		    			<h:panelGroup rendered="#{not empty viewCustomersMarkedToAgent.customerIds}">
+		    				<h:outputLabel for="customerId">Customer ID</h:outputLabel>
+							<h:selectOneMenu id="customerId" name="customerId" value="#{viewCustomersMarkedToAgent.customerId}">
+								<f:selectItems value="#{viewCustomersMarkedToAgent.customerIds}"></f:selectItems>
+							</h:selectOneMenu>
+							<h:commandButton action="#{viewCustomersMarkedToAgent.updatePolicyList()}" value="List Customer's Policies"></h:commandButton>
 		    			</h:panelGroup>
+		    			
+		    			<h:panelGroup rendered="#{not empty viewCustomersMarkedToAgent.policyNames}">
+		    				<h:outputLabel for="policyName">Policy</h:outputLabel>
+							<h:selectOneMenu id="policyName" name="policyName" value="#{viewCustomersMarkedToAgent.policyName}">
+								<f:selectItems value="#{viewCustomersMarkedToAgent.policyNames}"></f:selectItems>
+							</h:selectOneMenu>
+							<h:commandButton action="#{viewCustomersMarkedToAgent.viewPolicyDetails()}" value="View Policy Details"></h:commandButton>
+		    			</h:panelGroup>
+		    			
+		    			
 	    			</h:panelGrid>
+	    			
 	    		</h:form>
+	    		
+	    		<h:panelGrid rendered="#{viewCustomersMarkedToAgent.policyId  gt -1}">
+	    			CustomerID:#{viewCustomersMarkedToAgent.customerId}
+	    			PolicyID:#{viewCustomersMarkedToAgent.policyId}
+	    			PolicyName:#{viewCustomersMarkedToAgent.policyName}
+	    			Tenure:#{viewCustomersMarkedToAgent.tenure} Years
+	    			Sum Assured: $#{viewCustomersMarkedToAgent.sumAssured}
+	    			Premium :$#{viewCustomersMarkedToAgent.premium}
+	    		</h:panelGrid>
 	    		
     			
     		</ui:define>
