@@ -48,7 +48,7 @@ prereq varchar2(255)
 );
 
 create table manager
-(managerId int primary key, --Check highest id within code to generate email addresses
+(managerId int primary key,
 firstname varchar2(20) not null,
 middlename varchar2(20),
 lastname varchar2(20) not null,
@@ -82,7 +82,8 @@ acceptanceDate date
 
 create table policyHasTenure
 (policyId int references policy(policyId),
-tenureLength int default 1
+tenureLength int default 1,
+primary key (policyId, tenureLength)
 );
 
 create table nominee (

@@ -1,6 +1,6 @@
-INSERT INTO manager values (0, 'horse', 'cattle', 'rdddder', SYSDATE, 'zdne1', 'state1', 'des1', 'email', 'uesr1', 'pass');
-INSERT INTO manager values (1, 'hdsfe', 'caeeee', 'roosvvr', SYSDATE, 'zofe6', 'state2', 'des3', 'email3', 'uesr1', 'pass2');
-INSERT INTO manager values (2, 'hoffe', 'caaaae', 'rooster', SYSDATE, 'zona7', 'state5', 'des9', 'email2', 'uesr1', 'pass4');
+INSERT INTO manager values (0, 'horse', 'cattle', 'rdddder', SYSDATE, 'zdne1', 'state1', 'des1', 'email', 'uesr1', 'pass', 1);
+INSERT INTO manager values (1, 'hdsfe', 'caeeee', 'roosvvr', SYSDATE, 'zofe6', 'state2', 'des3', 'email3', 'uesr1', 'pass2', 0);
+INSERT INTO manager values (2, 'hoffe', 'caaaae', 'rooster', SYSDATE, 'zona7', 'state5', 'des9', 'email2', 'uesr1', 'pass4', 0);
 
 INSERT INTO customer VALUES (0, 'cat', 'dof', 'asdff', SYSDATE, 'Male', 'permanent', 'current', 'horse', 55000.1, 'Single', 1, '32emavdsil@horse.com', '94334', hextoraw('aad332'), '3232424', '123439', 'hadse');
 INSERT INTO customer VALUES (1, 'dst', 'fof', 'aggse', SYSDATE, 'Female', 'permanent', 'current', 'horse', 55000.1, 'Married', 3, '32afdsemail@horse.com', '93455', hextoraw('addd32'), '3678724', '777432', 'hfffe');

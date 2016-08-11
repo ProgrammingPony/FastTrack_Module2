@@ -6,7 +6,8 @@
 		response.sendRedirect("main.jsp");
     
     if ("POST".equalsIgnoreCase(request.getMethod()) && request.getParameter("submit") != null) {
-    	DBMethods.login(request, Integer.parseInt(request.getParameter("username")), request.getParameter("password"));
+    	DBMethods.login(request);
+    	
     }
     %>
     

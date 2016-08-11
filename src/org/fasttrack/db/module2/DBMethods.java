@@ -8,19 +8,23 @@ import java.sql.Statement;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.fasttrack.db.DBHelper;
+import org.fasttrack.db.*;
+
+
 
 public class DBMethods {
 
 	private DBMethods() {}
 	
-	public static boolean login(HttpServletRequest request, int id, String password) {
+	public static boolean login(HttpServletRequest request) {
+		
+		int id= Integer.parseInt(request.getParameter("username"));
+		String password = request.getParameter("password");
 		
 		boolean isAuthentic = false;
 		
-		HttpSession session = request.getSession();
 		
-		//JDBC
+		HttpSession session = request.getSession();
 		Connection conn = DBHelper.getDatabaseConnection();
 	    Statement stmt = null;
 	    

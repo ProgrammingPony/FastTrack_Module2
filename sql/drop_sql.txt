@@ -5,7 +5,6 @@ drop table claim;
 drop table nominee;
 drop table policyHasTenure;
 drop table mapping;
-drop table tenure;
 drop table premiumType;
 drop table manager;
 drop table policy;
