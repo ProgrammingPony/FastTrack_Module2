@@ -1,5 +1,6 @@
 package org.fasttrack.db.module2;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -9,9 +10,12 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.fasttrack.db.*;
+import org.fasttrack.db.sequences.PolicySequence;
+import org.fasttrack.jdbc.JDBCDemo;
 import org.fasttrack.processing.DateHelper;
 
 
@@ -19,6 +23,144 @@ import org.fasttrack.processing.DateHelper;
 public class DBMethods {
 
 	private DBMethods() {}
+	
+	static JDBCDemo jdbc = new JDBCDemo();
+	static int policyIdSeq = 100;
+	static PolicySequence seq = new PolicySequence();
+	
+	public static void RegisterPolicy (HttpServletRequest request, HttpServletResponse response) {
+		
+		
+			int id = -1;
+			
+			try {
+				id = seq.getNextId();
+			} catch (SQLException e1) {
+				System.out.println("Was not able to fetch the next policy id");
+				e1.printStackTrace();
+				return;
+			}
+			
+			int[] elements = new int[6];
+			String policyName = request.getParameter("name");
+			String policyNominee = request.getParameter("numNominee");
+			String policyPre = request.getParameter("prereq");
+			String policyMin = request.getParameter("minSum");
+			String policyMax = request.getParameter("maxSum");
+			
+			int policyMaxNum =0;
+			int policyNomineeNum =0;
+			int policyMinNum = 0;
+			
+			boolean i = false;
+			boolean j = false;
+			//out.println("i am here 2 ");
+			String errorMessage = null;
+			// validations!!! //////////
+			String tenure;
+			int counter =0;
+			for(int k = 1; k<7; k++){
+				tenure = request.getParameter("tenure"+k);
+				System.out.println(tenure);
+			if(tenure != null){
+				elements[k-1] = 1;
+				counter++;
+				
+			}}
+			if(counter ==0){
+				i = false;
+				errorMessage = " chose at least 1 tenure";
+				request.setAttribute("error", errorMessage);
+			}
+			// for name//
+			try {
+				i = jdbc.check(policyName);
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+			System.out.println("here after checking for the name.....");
+			// for min max and num nominee...////
+			try{
+				policyMinNum = Integer.parseInt(policyMin);
+			}
+			catch(NumberFormatException e){
+				i = false;
+				errorMessage = " enter valid Minimum assured sum";
+				request.setAttribute("error", errorMessage);
+			}
+			
+			try{
+				policyMaxNum = Integer.parseInt(policyMax);
+			}
+			catch(NumberFormatException e){
+				i = false;
+				errorMessage = " enter valid Maximum assured sum";
+				request.setAttribute("error", errorMessage);
+			}
+			
+			try{
+				policyNomineeNum = Integer.parseInt(policyNominee);
+			}
+			catch(NumberFormatException e){
+				i = false;
+				errorMessage = " enter valid minimum number of nomineeNominee";
+				request.setAttribute("error", errorMessage);
+			}
+			
+			if(policyMaxNum<policyMinNum||policyMaxNum<0 ||policyMinNum<0 ){
+				i = false;
+				errorMessage = " enter valid assured sums";
+				request.setAttribute("error", errorMessage);
+			}
+			
+			if(i == false){
+				if(errorMessage == null){
+					errorMessage = "The policy with the same name exists in the system";
+					request.setAttribute("error", errorMessage);
+				}
+				request.setAttribute("name", policyName);
+				request.setAttribute("numNominee", policyNominee);
+				request.setAttribute("prereq", policyPre);
+				request.setAttribute("minSum", policyMin);
+				request.setAttribute("maxSum", policyMax);
+				
+				/*
+				try {
+					//response.sendRedirect("/index.jsp");
+					//getServletContext().getRequestDispatcher("/index.jsp").include(request, response);
+					return;
+				} 
+				catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}*/
+		
+			}		
+			System.out.println("before insering");
+			// validations end here!!! //////////
+			
+			if(i == true){
+				
+				policyIdSeq++;
+				
+				//  insert into the database..
+				try {
+					j = jdbc.insertPolicy(id,policyName, policyMinNum, policyMaxNum, policyNomineeNum, policyPre, elements);
+				} catch (ClassNotFoundException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			System.out.println("here after inserting!!");
+			if(j == true){
+				// message for back... as success.. put a button to go back to home..
+				request.setAttribute("Success", "Policy was created Successfully");
+				//response.sendRedirect("Index.jsp");
+				System.out.println("j true");
+				
+			}
+	}
 	
 	public static boolean login(HttpServletRequest request) {
 		

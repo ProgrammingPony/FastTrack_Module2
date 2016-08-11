@@ -9,9 +9,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Logout</title>
 </head>
 <body>
-
+If you are seeing this then there is something wrong ;D
 </body>
 </html>
