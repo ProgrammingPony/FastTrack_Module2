@@ -25,12 +25,13 @@ public class DBMethods {
 		
 		
 		HttpSession session = request.getSession();
-		Connection conn = DBHelper.getDatabaseConnection();
+		Connection conn = null;
 	    Statement stmt = null;
 	    
 	   try{
 	      //STEP 2: Register JDBC driver
 	      Class.forName(DBHelper.getJdbcDriver());
+	      conn = DBHelper.getDatabaseConnection();
 
 	      //Check if it is a customer
 	      stmt = conn.createStatement();

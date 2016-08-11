@@ -6,8 +6,11 @@
 		response.sendRedirect("main.jsp");
     
     if ("POST".equalsIgnoreCase(request.getMethod()) && request.getParameter("submit") != null) {
-    	DBMethods.login(request);
+    	boolean success = DBMethods.login(request);    
     	
+    	if (success) {
+    		response.sendRedirect("main.jsp");
+    	}
     }
     %>
     
