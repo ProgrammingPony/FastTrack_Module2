@@ -56,12 +56,18 @@ response.setDateHeader("Expires", 0);
 						<a href="PolicyCertificate.jsp">Generate Certificate</a>
 					</li>
 					<li>
+						<a href="search-policy-by-agent.xhtml">Policies of Agent Customers</a>
+					</li>
+					<li>
 						<a href="#">Delete Policy</a>
 					</li>
 					
 					<%} else if(session.getAttribute("role") == "admin"){%>
 					<li>
 						<a href="index.jsp">Register New Policy</a>
+					</li>					
+					<li>
+						<a href="search-policy-by-agent.xhtml">Policies of Agent Customers</a>
 					</li>
 					<%}%>
 					

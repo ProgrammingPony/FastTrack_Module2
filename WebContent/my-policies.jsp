@@ -1,10 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ page import="org.fasttrack.db.module2.DBMethods" %>
     <%@ page import="java.util.ArrayList,java.util.TreeMap" %>
     <%
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
     response.setHeader("Pragma", "no-cache");
     response.setDateHeader("Expires", 0);
+    
+    //Redirect if no session or username not set, or role is not customer
+	if (session == null || session.getAttribute("id") == null || !((String)session.getAttribute("role")).equals("customer") ) {
+		request.setAttribute("login-error", "This page requires the user to log in");
+		response.sendRedirect("/login.jsp");
+	}
+    
+		DBMethods.myPolicies(request);
+    
     %>
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">

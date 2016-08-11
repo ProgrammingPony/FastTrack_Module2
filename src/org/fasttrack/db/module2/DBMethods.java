@@ -1,14 +1,18 @@
 package org.fasttrack.db.module2;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.fasttrack.db.*;
+import org.fasttrack.processing.DateHelper;
 
 
 
@@ -97,6 +101,82 @@ public class DBMethods {
 	   }//end try
 		
 	   return isAuthentic;
+	}
+	
+	public static void myPolicies (HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		
+		//Get parameters
+		int id = (int) session.getAttribute("id");
+		
+		//JDBC
+		Connection conn = null;
+	    Statement stmt = null;
+	    
+	    try{
+	      //STEP 2: Register JDBC driver
+	      Class.forName(DBHelper.getJdbcDriver());
+
+	      //STEP 3: Open a connection
+	      conn = DriverManager.getConnection(
+	    		  DBHelper.getDbUrl(),
+	    		  DBHelper.getUser(),
+	    		  DBHelper.getPass()
+	    		  );
+
+	      //Check if it is a customer
+	      stmt = conn.createStatement();
+	      String sql;
+	      sql = "SELECT policy.policyId as id, policyName, tenureYears, acceptancedate, premium, sumAssured  FROM mapping LEFT JOIN policy ON policy.policyId = mapping.policyId WHERE customerId=" + id;
+	      
+	      ResultSet rs = stmt.executeQuery(sql);
+	      ArrayList< TreeMap<String, Object> > list = new ArrayList< TreeMap<String, Object> > ();
+	      TreeMap<String, Object> map;
+	      //Make list containing all the user's policies
+	      while (rs.next()) {
+	    	  //Map with name,id of each Policy
+	    	  map = new TreeMap<String, Object>();
+	    	  map.put("id", rs.getInt("id"));
+	    	  map.put("name", rs.getString("policyName"));
+	    	  map.put("sumAssured", rs.getInt("sumAssured"));
+	    	  
+	    	  int tenureYears = rs.getInt("tenureYears");
+	    	  
+	    	  map.put("tenure", tenureYears);
+	    	  map.put("premium", rs.getInt("premium"));
+	    	  map.put("expiry", 
+	    			  DateHelper.addYearsToDate( rs.getDate("acceptanceDate"), tenureYears ).toString()
+	    			  );
+	    	  
+	    	  list.add(map);
+	      }
+	      
+	      request.setAttribute("my-policy-list", list);
+	      
+	      rs.close();
+	      stmt.close();
+	      
+	      conn.close();
+	   }catch(SQLException se){
+	      //Handle errors for JDBC
+	      se.printStackTrace();
+	   }catch(Exception e){
+	      //Handle errors for Class.forName
+	      e.printStackTrace();
+	   }finally{
+	      //finally block used to close resources
+	      try{
+	         if(stmt!=null)
+	            stmt.close();
+	      }catch(SQLException se2){
+	      }// nothing we can do
+	      try{
+	         if(conn!=null)
+	            conn.close();
+	      }catch(SQLException se){
+	         se.printStackTrace();
+	      }//end finally try
+	   }//end try
 	}
 	
 }
